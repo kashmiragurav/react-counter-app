@@ -1,0 +1,50 @@
+body{
+  background-color:rgb(122, 205, 223);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 20vh;  
+}
+form {
+  background: white;
+  padding: 50px;
+  border-radius: 15px;
+  text-align: center;
+}
+h2 {
+  color: rgb(67, 8, 103);
+  font-size: 40px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight:bolder;
+}
+p {
+  font-size: 30px;
+  margin-bottom: 20px;
+  color: rgb(67, 8, 103);
+  font-weight: bold;
+}
+button {
+  background-color: rgb(255, 210, 12);
+  color:rgb(2, 2, 2);
+  padding: 10px 15px;
+  cursor:grab;
+  border-radius: 2px;
+  border: none;
+  font-weight: bold;
+  margin: 5px;
+
+}
+
+button:hover {
+  background-color: #e17474;
+  transform: scale(1.05);
+
+}
+input {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  text-align: center;
+  font-size: 16px;
+}
