@@ -1,35 +1,43 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect} from "react";
 
 function Counter() {
   const [count, setCount] = useState(0); //Initially we set the counter as 0
-  const [input, setInput] = useState(""); // to handle input field
+  const [isRunning, setIsRunning] = useState(false); // to handle start and stop of counter
+  const [step, setStep] = useState(""); // to handle step value for increment and decrement
+  
 
   useEffect(() => {
-    setTimeout(() => {
-      setCount((count) => count + 1); // to increment the counter by 2 each second
-    }, 2000);
-  });
-  //to handle event- eventhandling function
-  const handleSubmit = (e) => {
-    e.preventDefault();// when we submit form page relods so to stop that use this
-    setCount(count + 1);//to increment the counter by 1 when form is submitted
-    setCount(count - 1); // to decrement the counter by 1 when form is submitted  
-    setCount(count + parseInt(input)); // to update the counter with value entered in input field 
-  };
+    let interval; //run something again and again after fixed gap
+    
+    if (isRunning) {
+        interval = setInterval(() => {  //setInterval runs the callback function every 1000 milliseconds (1 second).
+      setCount((prev) => prev + (Number(step) || 1)); // Use 1 if step is not a number
+    }, 1000);
+  }
+    return () => clearInterval(interval);   // to clear the interval when component unmounts or isRunning changes
+ }, [isRunning, step]);
 
-
+ // reset
+ const reset = () => {
+  setCount(0);
+  setIsRunning(false); //stop counter
+  setStep(0);
+ };
   return (
-    <form onSubmit={handleSubmit}> {/*when form submited it will run */}
-      <h2>Update Your Counter value</h2>
-      <button type="button" onClick={() => setCount(0)}>Reset</button>
-      <button type="button" onClick={() => setCount(count - 1)}>Decrement</button>
-      <button type="button" onClick={() => setCount(count + 1)}>Increment</button>
+    <div>
+      <h1>Counter is started: {count}</h1>
+      <input type="number" value={step}placeholder="Enter step value" 
+      onChange={(e) => setStep(e.target.value)} />
+        
+      <br></br>
+      <button type="button" onClick={() => setIsRunning(true)}>Start</button>
+      <button type="button" onClick={() => setIsRunning(false)}>Stop</button>
+      <button type="button" onClick={() => setCount((prev) => prev - (Number(step) || 1))}>Decrement</button>
+      <button type="button" onClick={() => setCount((prev) => prev + (Number(step) || 1))}>Increment</button>
+      <button type="button" onClick={reset}>Reset</button>
 
-      <input type="number" value={input} onChange={(e) => setInput(e.target.value)} />
-      <button type="submit">Add</button>
       <p>Submitted {count} times</p>
-
-    </form>
+</div>
   );
 }
 
